@@ -90,10 +90,10 @@ public class HelloWorld : MonoBehaviour {
 
         
 // 通过无GC Alloc方式调用方法：　下面两行代码接下来的几信方法通用共用
-        // 预先获得IMethod，可以减低每次调用查找方法耗用的时间
-        IType type = appdomain.LoadedTypes["HotFix_Project.InstanceClass"];
-        // 根据方法名称和参数个数获取方法
-        IMethod method = type.GetMethod("StaticFunTest2", 1); // 这之上的都与前面的有重复,是一样的
+        // // 预先获得IMethod，可以减低每次调用查找方法耗用的时间
+        // IType type = appdomain.LoadedTypes["HotFix_Project.InstanceClass"];
+        // // 根据方法名称和参数个数获取方法
+        // IMethod method = type.GetMethod("StaticFunTest2", 1); // 这之上的都与前面的有重复,是一样的
 
 // 1.指定参数类型获取IMethod
         using (var ctx = appdomain.BeginInvoke(method)) {
@@ -129,11 +129,11 @@ public class HelloWorld : MonoBehaviour {
         }
 
         
-        Debug.Log("指定参数类型来获得IMethod");
-        IType intType = appdomain.GetType(typeof(int)); // 接下来是：把方法的参数全部封装到了一个参数链表里，将链表传给方法再调用
-        // 参数类型列表
-        List<IType> paramList = new List<ILRuntime.CLR.TypeSystem.IType>();
-        paramList.Add(intType);
+        // Debug.Log("指定参数类型来获得IMethod");
+        // IType intType = appdomain.GetType(typeof(int)); // 接下来是：把方法的参数全部封装到了一个参数链表里，将链表传给方法再调用
+        // // 参数类型列表
+        // List<IType> paramList = new List<ILRuntime.CLR.TypeSystem.IType>();
+        // paramList.Add(intType);
 // 3. 调用泛型方法
         // 1）直接通过appdomain.InvokeGenericMethod来调用
         IType stringType = appdomain.GetType(typeof(string));
@@ -146,7 +146,7 @@ public class HelloWorld : MonoBehaviour {
         method = type.GetMethod("GenericMethod", paramList, genericArguments);
         appdomain.Invoke(method, null, 33333);　// 调用的时候传入int 的值
 
-        object obj = appdomain.Instantiate("HotFix_Project.InstanceClass", new object[] { 233 });
+        // object obj = appdomain.Instantiate("HotFix_Project.InstanceClass", new object[] { 233 });
 // 4.调用带Ref/Out参数的方法
     // public void RefOutMethod(int addition, out List<int> lst, ref int val) {　// 热更新里的方法申明
         method = type.GetMethod("RefOutMethod", 3); // 参数有三个
